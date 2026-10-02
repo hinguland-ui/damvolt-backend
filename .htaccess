@@ -1,0 +1,18 @@
+# Damvolt backend (Laravel) — root .htaccess
+# Use this when the domain's document root is the backend folder itself (typical shared hosting).
+# Best practice is to point the document root at backend/public instead; then this file is simply not used.
+
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Never reveal application files, secrets or tooling — whatever the path looks like.
+    RewriteRule (^|/)\.(?!well-known/) - [F,L]
+    RewriteRule ^(app|bootstrap|config|database|resources|routes|tests|vendor|node_modules)(/|$) - [F,L,NC]
+    RewriteRule ^(artisan|composer\.(json|lock)|package(-lock)?\.json|phpunit\.xml|vite\.config\.js|README\.md|CLAUDE\.md|AGENTS\.md)$ - [F,L,NC]
+
+    # Everything else is served from /public (assets, the front controller, storage links)
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

@@ -1,0 +1,59 @@
+# Damvolt backend (Laravel) — public/.htaccess  (point your domain's document root here)
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Handle X-XSRF-Token Header
+    RewriteCond %{HTTP:x-xsrf-token} .
+    RewriteRule .* - [E=HTTP_X_XSRF_TOKEN:%{HTTP:X-XSRF-Token}]
+
+    # Hidden files / folders (.env, .git, .htaccess …) are never served
+    RewriteRule (^|/)\.(?!well-known/) - [F,L]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+Options -Indexes
+ServerSignature Off
+
+# Only index.php may run as PHP; no other script (e.g. an uploaded one) is ever executed or downloaded
+<FilesMatch "\.(php|phtml|phar|inc|php[0-9])$">
+    Require all denied
+</FilesMatch>
+<Files "index.php">
+    Require all granted
+</Files>
+
+# Server / config / data files are never downloadable
+<FilesMatch "\.(env|log|sql|bak|ini|lock|md|ya?ml|dist|sh|swp|orig|sqlite)$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    Header always unset X-Powered-By
+</IfModule>
+
+<IfModule mod_php.c>
+    php_flag display_errors off
+    php_flag expose_php off
+</IfModule>

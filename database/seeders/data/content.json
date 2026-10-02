@@ -1,0 +1,965 @@
+{
+  "brand": {
+    "site_name": "Damvolt Engineering Services Private Limited",
+    "short_name": "Damvolt",
+    "tagline": "Complete Electrical & Automation Solutions",
+    "description": "We are a complete electrical solutions provider dealing with electrical equipment, automation and industrial commissioning. We make your electrical systems efficient and safe.",
+    "logo": "brand/logo.png",
+    "footer_logo": "brand/footer-logo.png",
+    "favicon": "brand/fav.png"
+  },
+  "contact": {
+    "email_1": "sales@damvolt.com",
+    "email_2": "",
+    "phone_1": "+91 96341 84251",
+    "phone_2": "+91 90456 78952",
+    "whatsapp": "919634184251"
+  },
+  "business": {
+    "gst_number": "",
+    "cin": "",
+    "hours": "Mon – Sat, 9:30 AM – 6:30 PM"
+  },
+  "offices": {
+    "items": [
+      {
+        "label": "Corporate Office",
+        "address": "D-31, Sector-7, Noida-201301, Uttar Pradesh, India",
+        "map": "https://www.google.com/maps?q=D-31,+Sector+7,+Noida,+Uttar+Pradesh+201301&output=embed",
+        "map_link": "https://maps.google.com/?q=D-31,+Sector+7,+Noida,+Uttar+Pradesh+201301"
+      },
+      {
+        "label": "Registered Office",
+        "address": "P-16, 3, Street No. 9, New Pratap Nagar, Phase-1, Mayur Vihar, New Delhi-110091, India",
+        "map": "",
+        "map_link": "https://maps.google.com/?q=New+Pratap+Nagar,+Mayur+Vihar+Phase+1,+New+Delhi+110091"
+      }
+    ]
+  },
+  "social": {
+    "facebook": "#",
+    "instagram": "#",
+    "linkedin": "#",
+    "youtube": "#"
+  },
+  "home": {
+    "seo": {
+      "meta_title": "Damvolt Engineering Services Private Limited | Complete Electrical & Automation Solutions",
+      "meta_description": "We are a complete electrical solutions provider dealing with electrical equipment, automation and industrial commissioning. We make your electrical systems efficient and safe.",
+      "meta_keywords": "electrical solutions, transformers, LT HT panels, switchgear, industrial automation, PLC VFD HMI, testing commissioning, Noida, Delhi NCR"
+    },
+    "trust": {
+      "items": [
+        {
+          "icon": "ShieldCheck",
+          "title": "Safety first",
+          "text": "IS/IEC compliant work"
+        },
+        {
+          "icon": "BadgeCheck",
+          "title": "Genuine equipment",
+          "text": "Trusted OEM brands"
+        },
+        {
+          "icon": "Clock",
+          "title": "On-time delivery",
+          "text": "Planned execution"
+        },
+        {
+          "icon": "Headset",
+          "title": "After-sales support",
+          "text": "AMC & breakdown service"
+        }
+      ]
+    },
+    "about": {
+      "eyebrow": "About Damvolt",
+      "title": "One partner for your complete electrical system.",
+      "lead": "Damvolt Engineering Services Private Limited is a complete electrical solutions provider dealing with electrical equipment, industrial automation and commissioning.",
+      "text": "Our engineers handle design, supply, installation, testing and commissioning — so you get one accountable team from the first drawing to the final handover.",
+      "image": "images/engineer-lab.webp",
+      "badge_value": "10+",
+      "badge_label": "Years of experience",
+      "points": [
+        {
+          "text": "Transformers & substations"
+        },
+        {
+          "text": "LT / HT panels & switchgear"
+        },
+        {
+          "text": "PLC, VFD & HMI automation"
+        },
+        {
+          "text": "Testing & commissioning"
+        }
+      ],
+      "button_label": "More about us",
+      "button_url": "/about"
+    },
+    "services": {
+      "eyebrow": "Services",
+      "title": "Electrical & automation services",
+      "text": "End-to-end solutions for industrial, commercial and infrastructure projects.",
+      "link_label": "View all services"
+    },
+    "stats": {
+      "eyebrow": "Our track record",
+      "title": "Numbers that speak for our work.",
+      "items": [
+        {
+          "value": 10,
+          "suffix": "+",
+          "label": "Years of Experience"
+        },
+        {
+          "value": 250,
+          "suffix": "+",
+          "label": "Projects Delivered"
+        },
+        {
+          "value": 120,
+          "suffix": "+",
+          "label": "Happy Clients"
+        },
+        {
+          "value": 24,
+          "suffix": "/7",
+          "label": "Service Support"
+        }
+      ]
+    },
+    "why": {
+      "eyebrow": "Why choose us",
+      "title": "Built on safety, quality and trust.",
+      "text": "Engineering expertise, genuine equipment and disciplined execution on every project.",
+      "items": [
+        {
+          "icon": "ShieldCheck",
+          "title": "Safety First",
+          "text": "Every job follows IS/IEC standards and strict site-safety practices."
+        },
+        {
+          "icon": "BadgeCheck",
+          "title": "Quality Equipment",
+          "text": "Only genuine, tested components from trusted OEM brands."
+        },
+        {
+          "icon": "Clock",
+          "title": "On-Time Delivery",
+          "text": "Planned execution with clear timelines and daily progress updates."
+        },
+        {
+          "icon": "Headset",
+          "title": "After-Sales Support",
+          "text": "Quick response for breakdowns, AMC and preventive maintenance."
+        },
+        {
+          "icon": "Wrench",
+          "title": "Turnkey Execution",
+          "text": "Design, supply, installation, testing and commissioning — one team."
+        },
+        {
+          "icon": "IndianRupee",
+          "title": "Transparent Pricing",
+          "text": "Detailed, itemised quotations with no hidden costs."
+        }
+      ]
+    },
+    "process": {
+      "eyebrow": "How we work",
+      "title": "A simple, transparent process.",
+      "items": [
+        {
+          "title": "Consultation",
+          "text": "We understand your load, site conditions and project goals."
+        },
+        {
+          "title": "Design & Quote",
+          "text": "Engineering drawings, BOQ and a transparent quotation."
+        },
+        {
+          "title": "Supply & Install",
+          "text": "Genuine equipment, installed by trained technicians."
+        },
+        {
+          "title": "Test & Commission",
+          "text": "Complete testing, documentation and handover."
+        }
+      ]
+    },
+    "industries": {
+      "eyebrow": "Industries",
+      "title": "Industries we power",
+      "text": "Trusted by plants, buildings and energy projects across sectors.",
+      "link_label": "All industries"
+    },
+    "reviews": {
+      "badge": "Trusted by industries across Delhi NCR",
+      "title": "Words of trust from the clients we power."
+    },
+    "cta": {
+      "title": "Planning an electrical or automation project?",
+      "text": "Talk to our engineers for a free site consultation and a detailed, transparent quotation."
+    }
+  },
+  "slides": [
+    {
+      "image": "images/hero-powerlines.webp",
+      "kicker": "Electrical Engineering · Noida & Delhi NCR",
+      "title": "Powering industry with safe, reliable electrical systems.",
+      "text": "Transformers, LT/HT panels, cabling, testing and commissioning — delivered end-to-end by one accountable team.",
+      "btn1_label": "Get a free quote",
+      "btn1_url": "/contact",
+      "btn2_label": "Explore services",
+      "btn2_url": "/services"
+    },
+    {
+      "image": "images/machine-automation.webp",
+      "kicker": "Industrial Automation",
+      "title": "Smarter plants with PLC, VFD and HMI automation.",
+      "text": "Custom automation panels and machine automation that raise output, consistency and safety on your shop floor.",
+      "btn1_label": "Automation panels",
+      "btn1_url": "/services/automation-panels",
+      "btn2_label": "Machine automation",
+      "btn2_url": "/services/machine-automation"
+    },
+    {
+      "image": "images/commissioning.webp",
+      "kicker": "Testing & Commissioning",
+      "title": "Tested, commissioned and ready for day one.",
+      "text": "Calibrated testing, careful energisation and complete documentation for a smooth plant start-up.",
+      "btn1_label": "Commissioning services",
+      "btn1_url": "/services/commissioning-services",
+      "btn2_label": "Site testing",
+      "btn2_url": "/services/site-testing"
+    }
+  ],
+  "categories": [
+    {
+      "name": "Electrical",
+      "heading": "Electrical equipment & installation",
+      "description": "Transformers, panels and cabling — supplied, installed and maintained."
+    },
+    {
+      "name": "Testing",
+      "heading": "Testing & commissioning",
+      "description": "Verified performance and a safe, documented start-up."
+    },
+    {
+      "name": "Automation",
+      "heading": "Industrial automation",
+      "description": "Machines, panels, instruments and process control that run smarter."
+    }
+  ],
+  "services": [
+    {
+      "slug": "transformers",
+      "title": "Transformers",
+      "category": "Electrical",
+      "icon": "Zap",
+      "image": "images/transformers.webp",
+      "short": "Supply, installation and maintenance of distribution & power transformers.",
+      "intro": "Reliable power starts with the right transformer. We supply, install, test and maintain oil-cooled and dry-type transformers for factories, commercial buildings, hospitals and infrastructure projects — sized correctly for your load and future expansion.",
+      "offerings": [
+        "Distribution transformers (oil-cooled & dry type)",
+        "Power transformers for industrial loads",
+        "Compact substations & package substations",
+        "Transformer installation & erection",
+        "Oil filtration, BDV & DGA testing",
+        "Transformer overhauling & AMC"
+      ],
+      "benefits": [
+        {
+          "title": "Right Sizing",
+          "text": "Load study ensures you never over-pay or under-size."
+        },
+        {
+          "title": "Lower Losses",
+          "text": "Energy-efficient units reduce running cost."
+        },
+        {
+          "title": "Longer Life",
+          "text": "Regular testing & maintenance prevent failures."
+        }
+      ],
+      "applications": [
+        "Factories & plants",
+        "Commercial complexes",
+        "Hospitals",
+        "Residential societies",
+        "Infrastructure projects"
+      ]
+    },
+    {
+      "slug": "switchgear-electrical-panels",
+      "title": "Switchboards & Electrical Panels",
+      "category": "Electrical",
+      "icon": "LayoutPanelTop",
+      "image": "images/switchgear.webp",
+      "short": "LT/HT panels, MCC, PCC, distribution boards and switchgear.",
+      "intro": "We design, manufacture and install robust LT & HT electrical panels and switchgear for safe, organised power distribution. Every panel is built with quality components, proper busbar sizing and complete testing before dispatch.",
+      "offerings": [
+        "LT panels — PCC, MCC, APFC & distribution boards",
+        "HT panels & VCB switchgear",
+        "Motor Control Centres (MCC)",
+        "Automatic Power Factor Correction (APFC) panels",
+        "AMF / DG synchronisation panels",
+        "Busduct & rising mains"
+      ],
+      "benefits": [
+        {
+          "title": "Safe Distribution",
+          "text": "Proper protection, interlocks and earthing."
+        },
+        {
+          "title": "Custom Built",
+          "text": "Designed around your exact load and layout."
+        },
+        {
+          "title": "Type-Tested Parts",
+          "text": "Genuine breakers, relays and meters."
+        }
+      ],
+      "applications": [
+        "Manufacturing units",
+        "Commercial buildings",
+        "Data centres",
+        "Pumping stations",
+        "Warehouses"
+      ]
+    },
+    {
+      "slug": "industrial-cables",
+      "title": "Industrial Cables & Cabling",
+      "category": "Electrical",
+      "icon": "Cable",
+      "image": "images/cables.webp",
+      "short": "Supply, laying, termination and jointing of LT/HT power & control cables.",
+      "intro": "From cable sizing to final termination, we execute complete industrial cabling — trenching, tray work, laying, glanding, jointing and testing — so your power and control circuits run safely for decades.",
+      "offerings": [
+        "LT & HT power cables (XLPE / PVC armoured)",
+        "Control, instrumentation & flexible cables",
+        "Cable tray, raceway & trench work",
+        "Cable laying, glanding & termination",
+        "HT cable jointing (heat-shrink / cold-shrink)",
+        "Cable testing — IR, HV & continuity"
+      ],
+      "benefits": [
+        {
+          "title": "Correct Sizing",
+          "text": "Voltage drop & current rating calculated."
+        },
+        {
+          "title": "Neat Routing",
+          "text": "Organised trays and tagging for easy maintenance."
+        },
+        {
+          "title": "Tested Joints",
+          "text": "Every termination tested before energising."
+        }
+      ],
+      "applications": [
+        "Industrial plants",
+        "Substations",
+        "Solar plants",
+        "Commercial buildings",
+        "Infrastructure"
+      ]
+    },
+    {
+      "slug": "site-testing",
+      "title": "Site Testing",
+      "category": "Testing",
+      "icon": "Gauge",
+      "image": "images/testing.webp",
+      "short": "Pre-commissioning and periodic testing of electrical equipment & systems.",
+      "intro": "Our testing engineers use calibrated instruments to verify that every transformer, panel, cable and protection device performs exactly as designed — before energising and throughout its life.",
+      "offerings": [
+        "Insulation resistance & HV testing",
+        "Transformer testing — ratio, winding resistance, BDV",
+        "Relay testing & protection coordination",
+        "Earthing / earth-pit resistance testing",
+        "CT / PT testing",
+        "Thermography & power quality audits"
+      ],
+      "benefits": [
+        {
+          "title": "Prevent Failures",
+          "text": "Detect faults before they cause downtime."
+        },
+        {
+          "title": "Compliance",
+          "text": "Reports ready for audits and inspections."
+        },
+        {
+          "title": "Calibrated Tools",
+          "text": "Accurate, traceable test results."
+        }
+      ],
+      "applications": [
+        "New installations",
+        "Periodic maintenance",
+        "Insurance & safety audits",
+        "Fault investigation"
+      ]
+    },
+    {
+      "slug": "commissioning-services",
+      "title": "Commissioning Services",
+      "category": "Testing",
+      "icon": "PlugZap",
+      "image": "images/commissioning.webp",
+      "short": "Safe energisation and handover of complete electrical installations.",
+      "intro": "Commissioning is where everything comes together. Our team checks, energises and fine-tunes your complete electrical and automation system, then hands it over with full documentation for a smooth plant start-up.",
+      "offerings": [
+        "Pre-commissioning checks & checklists",
+        "Substation & panel energisation",
+        "Motor & drive commissioning",
+        "Automation system start-up & loop checks",
+        "Load trials & performance verification",
+        "As-built drawings & handover documentation"
+      ],
+      "benefits": [
+        {
+          "title": "Smooth Start-Up",
+          "text": "No surprises on day one of production."
+        },
+        {
+          "title": "Full Documentation",
+          "text": "Test sheets, manuals and drawings handed over."
+        },
+        {
+          "title": "Operator Training",
+          "text": "Your team learns to run the system safely."
+        }
+      ],
+      "applications": [
+        "New plants",
+        "Plant expansions",
+        "Substations",
+        "Utility buildings"
+      ]
+    },
+    {
+      "slug": "machine-automation",
+      "title": "Machine Automation",
+      "category": "Automation",
+      "icon": "Bot",
+      "image": "images/machine-automation.webp",
+      "short": "Automate machines and lines to boost production efficiency.",
+      "intro": "Machine automation enhances production efficiency and optimises your processes. We automate new and existing machines with PLCs, drives, sensors and safety systems — increasing output, consistency and operator safety.",
+      "offerings": [
+        "Automation of new & existing machines",
+        "PLC programming & logic development",
+        "Servo & motion control",
+        "Sensor, encoder & safety integration",
+        "Conveyor & material handling automation",
+        "Retrofitting of old machine controls"
+      ],
+      "benefits": [
+        {
+          "title": "Higher Output",
+          "text": "Faster cycles and less manual handling."
+        },
+        {
+          "title": "Consistent Quality",
+          "text": "Repeatable, error-free operation."
+        },
+        {
+          "title": "Safer Workplace",
+          "text": "Interlocks and safety circuits built in."
+        }
+      ],
+      "applications": [
+        "Automobile & auto parts",
+        "Packaging",
+        "Plastics",
+        "Textiles",
+        "Food processing"
+      ]
+    },
+    {
+      "slug": "automation-panels",
+      "title": "Automation Panels (PLC, VFD, HMI)",
+      "category": "Automation",
+      "icon": "Cpu",
+      "image": "images/automation-panels.webp",
+      "short": "Custom PLC, VFD and HMI control panels built to your process.",
+      "intro": "We build customised automation panels integrating PLCs, VFDs and HMIs from leading brands. Each panel is wired, programmed and tested in-house so it is ready to plug into your process.",
+      "offerings": [
+        "PLC control panels",
+        "VFD / AC drive panels",
+        "HMI & SCADA integration",
+        "Soft starter & star-delta panels",
+        "Remote I/O & communication (Modbus, Profinet)",
+        "Panel programming, FAT & site support"
+      ],
+      "benefits": [
+        {
+          "title": "Energy Savings",
+          "text": "VFDs cut motor energy use significantly."
+        },
+        {
+          "title": "Easy Control",
+          "text": "Intuitive HMI screens for operators."
+        },
+        {
+          "title": "Tested In-House",
+          "text": "Factory acceptance test before dispatch."
+        }
+      ],
+      "applications": [
+        "Pumps & HVAC",
+        "Process plants",
+        "Water treatment",
+        "Production lines",
+        "Utilities"
+      ]
+    },
+    {
+      "slug": "instrumentation",
+      "title": "Instrumental Monitoring & Control",
+      "category": "Automation",
+      "icon": "Activity",
+      "image": "images/instrumentation.webp",
+      "short": "Real-time measurement and control of temperature, pressure, flow & level.",
+      "intro": "Instrumental monitoring gives you real-time measurement of operational parameters, while instrumental control manipulates industrial variables to keep your process consistent. We supply, install and calibrate the complete instrumentation chain.",
+      "offerings": [
+        "Temperature, pressure, flow & level transmitters",
+        "Energy meters & power monitoring systems",
+        "PID controllers & control valves",
+        "Instrument installation, tubing & cabling",
+        "Calibration & loop checking",
+        "Data logging & remote monitoring"
+      ],
+      "benefits": [
+        {
+          "title": "Real-Time Data",
+          "text": "See exactly what is happening, live."
+        },
+        {
+          "title": "Process Consistency",
+          "text": "Tight control of critical variables."
+        },
+        {
+          "title": "Early Alerts",
+          "text": "Alarms before small issues become big ones."
+        }
+      ],
+      "applications": [
+        "Pharma",
+        "Chemical",
+        "Food & beverage",
+        "Water & wastewater",
+        "Power plants"
+      ]
+    },
+    {
+      "slug": "process-control",
+      "title": "Process Control Engineering",
+      "category": "Automation",
+      "icon": "Workflow",
+      "image": "images/process-control.webp",
+      "short": "Engineering services for yield maximisation and regulatory compliance.",
+      "intro": "Our process control engineering services help you maximise yield, reduce waste and stay compliant. We study your process, design the control philosophy and implement it with the right hardware and software.",
+      "offerings": [
+        "Process study & control philosophy",
+        "P&ID review and instrument selection",
+        "DCS / PLC / SCADA based control systems",
+        "Batch & continuous process automation",
+        "Alarm management & reporting",
+        "Upgrades of legacy control systems"
+      ],
+      "benefits": [
+        {
+          "title": "Maximum Yield",
+          "text": "Optimised setpoints and less wastage."
+        },
+        {
+          "title": "Compliance Ready",
+          "text": "Audit trails and accurate records."
+        },
+        {
+          "title": "Scalable",
+          "text": "Systems that grow with your plant."
+        }
+      ],
+      "applications": [
+        "Chemical plants",
+        "Pharmaceuticals",
+        "Food processing",
+        "Paper & pulp",
+        "Water treatment"
+      ]
+    }
+  ],
+  "industries": [
+    {
+      "title": "Manufacturing",
+      "image": "images/ind-manufacturing.webp",
+      "icon": "Factory"
+    },
+    {
+      "title": "Automobile",
+      "image": "images/machine-automation.webp",
+      "icon": "Car"
+    },
+    {
+      "title": "Pharma & Chemical",
+      "image": "images/ind-pharma.webp",
+      "icon": "FlaskConical"
+    },
+    {
+      "title": "Commercial Buildings",
+      "image": "images/ind-commercial.webp",
+      "icon": "Building2"
+    },
+    {
+      "title": "Warehousing & Logistics",
+      "image": "images/ind-warehouse.webp",
+      "icon": "Warehouse"
+    },
+    {
+      "title": "Solar & Renewable",
+      "image": "images/ind-solar.webp",
+      "icon": "Sun"
+    },
+    {
+      "title": "Wind Energy",
+      "image": "images/ind-wind.webp",
+      "icon": "Wind"
+    },
+    {
+      "title": "Steel & Metal",
+      "image": "images/ind-metal.webp",
+      "icon": "Anvil"
+    }
+  ],
+  "reviews": [
+    {
+      "name": "Ramesh Kumar",
+      "role": "Factory Owner",
+      "text": "I highly recommend Damvolt Engineering for any electrical project.",
+      "rating": 5,
+      "real": true
+    },
+    {
+      "name": "Suresh Reddy",
+      "role": "Site Manager",
+      "text": "Their commissioning services enabled a smooth plant start-up.",
+      "rating": 5,
+      "real": true
+    },
+    {
+      "name": "Amit Verma",
+      "role": "Plant Head, Auto Components",
+      "text": "The PLC and VFD panels were delivered on schedule and our line has run without a single trip since.",
+      "rating": 5
+    },
+    {
+      "name": "Neha Gupta",
+      "role": "Facility Manager, Commercial Complex",
+      "text": "Very neat cabling and panel work. The team followed every safety rule on site.",
+      "rating": 5
+    },
+    {
+      "name": "Rajesh Malhotra",
+      "role": "Director, Packaging Unit",
+      "text": "From load study to commissioning, everything was handled by one team. Saved us a lot of coordination.",
+      "rating": 5
+    },
+    {
+      "name": "Pooja Sharma",
+      "role": "Project Engineer",
+      "text": "Clear drawings, a transparent BOQ and no surprise costs. Exactly what we wanted.",
+      "rating": 5
+    },
+    {
+      "name": "Vikram Singh",
+      "role": "Maintenance Head, Steel Plant",
+      "text": "Their testing engineers found an insulation fault before it became a breakdown. Very thorough.",
+      "rating": 5
+    },
+    {
+      "name": "Anjali Mehta",
+      "role": "Admin Head, Hospital",
+      "text": "Transformer installation was done over a weekend with minimal shutdown. Highly professional.",
+      "rating": 5
+    },
+    {
+      "name": "Sanjay Chauhan",
+      "role": "Owner, Plastic Moulding Unit",
+      "text": "Machine automation improved our output noticeably. Good after-sales support as well.",
+      "rating": 4
+    },
+    {
+      "name": "Kavita Joshi",
+      "role": "Purchase Manager",
+      "text": "Quotations were detailed and itemised. Easy to compare and approve.",
+      "rating": 5
+    },
+    {
+      "name": "Manoj Yadav",
+      "role": "Electrical In-charge, Warehouse",
+      "text": "APFC panel installation brought our power factor up and our bills down.",
+      "rating": 5
+    },
+    {
+      "name": "Deepak Arora",
+      "role": "COO, Food Processing Plant",
+      "text": "Instrumentation and process control work was precise. Our batches are far more consistent now.",
+      "rating": 5
+    },
+    {
+      "name": "Ritu Bansal",
+      "role": "Operations Lead",
+      "text": "Responsive team — they picked up the phone even on a Sunday breakdown.",
+      "rating": 5
+    },
+    {
+      "name": "Harish Nair",
+      "role": "Site Engineer, Infrastructure Project",
+      "text": "HT cable jointing and testing were done cleanly with proper reports handed over.",
+      "rating": 5
+    },
+    {
+      "name": "Sunita Kapoor",
+      "role": "Managing Partner, Textile Unit",
+      "text": "They retrofitted our old machine controls and trained our operators patiently.",
+      "rating": 4
+    },
+    {
+      "name": "Arvind Mishra",
+      "role": "Plant Manager, Pharma",
+      "text": "Documentation quality was audit-ready. That matters a lot in our industry.",
+      "rating": 5
+    },
+    {
+      "name": "Gaurav Tiwari",
+      "role": "Project Manager, Real Estate",
+      "text": "Rising mains and LT panels for our tower were completed ahead of handover.",
+      "rating": 5
+    },
+    {
+      "name": "Meena Iyer",
+      "role": "Facility Head, IT Park",
+      "text": "Thermography audit helped us fix hotspots we never knew existed.",
+      "rating": 5
+    },
+    {
+      "name": "Rohit Saxena",
+      "role": "Owner, CNC Workshop",
+      "text": "Honest advice — they suggested a smaller transformer that fit our real load.",
+      "rating": 5
+    },
+    {
+      "name": "Shalini Dubey",
+      "role": "Procurement Lead",
+      "text": "Genuine branded components and proper test certificates with every panel.",
+      "rating": 5
+    },
+    {
+      "name": "Naveen Rao",
+      "role": "Utilities Manager",
+      "text": "Earthing and relay testing were done systematically. We feel much safer now.",
+      "rating": 5
+    },
+    {
+      "name": "Prakash Jain",
+      "role": "Director, Chemical Plant",
+      "text": "The SCADA integration gives us live data from the whole plant on one screen.",
+      "rating": 4
+    },
+    {
+      "name": "Swati Agarwal",
+      "role": "Admin Manager, School Campus",
+      "text": "Clean execution, no mess left behind, and the site was safe for students throughout.",
+      "rating": 5
+    },
+    {
+      "name": "Karan Bhatia",
+      "role": "Founder, Logistics Hub",
+      "text": "DG synchronisation panel works flawlessly during every power cut.",
+      "rating": 5
+    },
+    {
+      "name": "Lalit Pandey",
+      "role": "Chief Engineer, Paper Mill",
+      "text": "Motor control centres were built to our exact layout. Great workmanship.",
+      "rating": 5
+    },
+    {
+      "name": "Divya Menon",
+      "role": "Quality Head, Electronics Unit",
+      "text": "Power quality audit and corrective work fixed our frequent equipment resets.",
+      "rating": 5
+    },
+    {
+      "name": "Sachin Kulkarni",
+      "role": "Maintenance Manager",
+      "text": "Their AMC visits are regular and well documented. Breakdowns have reduced a lot.",
+      "rating": 5
+    },
+    {
+      "name": "Nidhi Srivastava",
+      "role": "Project Coordinator",
+      "text": "Daily progress updates kept our management fully informed during the project.",
+      "rating": 5
+    },
+    {
+      "name": "Ashok Thakur",
+      "role": "Owner, Cold Storage",
+      "text": "VFDs on our compressors cut our energy consumption significantly.",
+      "rating": 5
+    },
+    {
+      "name": "Preeti Khanna",
+      "role": "GM Operations, Hotel",
+      "text": "Polite team, safe work practices and quick completion. Would hire again.",
+      "rating": 5
+    },
+    {
+      "name": "Vivek Rastogi",
+      "role": "Plant Engineer, Auto Parts",
+      "text": "Conveyor automation and sensor integration done right the first time.",
+      "rating": 5
+    },
+    {
+      "name": "Rekha Bhardwaj",
+      "role": "Director, Garment Export House",
+      "text": "Complete factory electrification handled end-to-end. Very smooth experience.",
+      "rating": 4
+    },
+    {
+      "name": "Tarun Sethi",
+      "role": "Facility Engineer, Mall",
+      "text": "Busduct installation was neat and well planned around our operating hours.",
+      "rating": 5
+    },
+    {
+      "name": "Mohit Goel",
+      "role": "Partner, Fabrication Unit",
+      "text": "Fair pricing, quality material and engineers who actually explain things.",
+      "rating": 5
+    },
+    {
+      "name": "Shweta Rawat",
+      "role": "EHS Manager",
+      "text": "Safety culture of the team is impressive — PPE, LOTO and permits followed every day.",
+      "rating": 5
+    },
+    {
+      "name": "Ajay Negi",
+      "role": "Site In-charge, Solar Project",
+      "text": "Cable laying and HT switchgear commissioning for our solar plant went perfectly.",
+      "rating": 5
+    },
+    {
+      "name": "Payal Chawla",
+      "role": "Owner, Bakery Plant",
+      "text": "Process automation made our ovens far more consistent. Very happy.",
+      "rating": 5
+    },
+    {
+      "name": "Hemant Joshi",
+      "role": "Electrical Head, Water Treatment",
+      "text": "Pump automation panels with remote monitoring — reliable and easy to use.",
+      "rating": 5
+    },
+    {
+      "name": "Ankit Sood",
+      "role": "Project Lead, Data Room",
+      "text": "Distribution and earthing work met every spec in our tender document.",
+      "rating": 5
+    },
+    {
+      "name": "Usha Pillai",
+      "role": "Trustee, Charitable Hospital",
+      "text": "They handled our transformer upgrade with great care for patient safety.",
+      "rating": 5
+    },
+    {
+      "name": "Nitin Bhalla",
+      "role": "Owner, Printing Press",
+      "text": "Old wiring replaced and panels upgraded — no more tripping during peak jobs.",
+      "rating": 5
+    },
+    {
+      "name": "Jyoti Mathur",
+      "role": "Admin, Corporate Office",
+      "text": "Prompt response, clean work and complete handover documents.",
+      "rating": 5
+    },
+    {
+      "name": "Rahul Dhawan",
+      "role": "Production Manager",
+      "text": "HMI screens are simple for our operators. Training was very helpful.",
+      "rating": 5
+    },
+    {
+      "name": "Seema Tyagi",
+      "role": "Director, Engineering Firm",
+      "text": "A dependable execution partner for our electrical sub-contracts.",
+      "rating": 5
+    }
+  ],
+  "faqs": [
+    {
+      "question": "What services does Damvolt Engineering Services Private Limited provide?",
+      "answer": "We provide complete electrical and automation solutions — transformers, LT/HT panels and switchgear, industrial cabling, site testing, commissioning, machine automation, PLC/VFD/HMI panels, instrumentation and process control."
+    },
+    {
+      "question": "Do you take turnkey electrical projects?",
+      "answer": "Yes. We handle the full cycle — load study, design, supply, installation, testing, commissioning and handover documentation — under one contract."
+    },
+    {
+      "question": "Which areas do you serve?",
+      "answer": "Our offices are in Noida and New Delhi, and we execute projects across Delhi NCR, Uttar Pradesh and other states in India."
+    },
+    {
+      "question": "Do you offer Annual Maintenance Contracts (AMC)?",
+      "answer": "Yes, we offer AMC and preventive maintenance for transformers, panels, automation systems and complete electrical installations."
+    },
+    {
+      "question": "How can I get a quotation?",
+      "answer": "Call us, WhatsApp us, or fill the enquiry form on the Contact page with your requirement. Our team usually responds within one working day."
+    },
+    {
+      "question": "Do you provide testing reports and certificates?",
+      "answer": "Yes. After testing and commissioning we hand over detailed test reports, checklists and as-built documentation."
+    }
+  ],
+  "legal": [
+    {
+      "title": "Privacy Policy",
+      "slug": "privacy-policy",
+      "description": "How Damvolt Engineering Services collects, uses and protects your information.",
+      "content": "<p>Damvolt Engineering Services Private Limited (\"Damvolt\", \"we\", \"us\") respects your privacy. This Privacy Policy explains how we collect, use and protect information when you visit our website or contact us.</p>\n<h2>Information We Collect</h2>\n<ul><li>Contact details you share with us, such as name, phone number, email address and company name.</li><li>Project details and requirements you send through our enquiry form, WhatsApp, email or phone.</li><li>Basic technical data such as browser type, device and pages visited, collected through standard server logs or analytics tools.</li></ul>\n<h2>How We Use Your Information</h2>\n<ul><li>To respond to your enquiries and prepare quotations.</li><li>To deliver, support and maintain the services you request.</li><li>To improve our website and services.</li><li>To comply with legal and regulatory obligations.</li></ul>\n<h2>Sharing of Information</h2>\n<p>We do not sell or rent your personal information. We may share it only with trusted service partners who help us run our business (for example, equipment suppliers for a project you requested), or when required by law.</p>\n<h2>Data Security</h2>\n<p>We take reasonable technical and organisational measures to protect your information against unauthorised access, loss or misuse. However, no method of transmission over the internet is 100% secure.</p>\n<h2>Cookies</h2>\n<p>Our website may use cookies or similar technologies to understand how visitors use the site. You can disable cookies in your browser settings at any time.</p>\n<h2>Your Rights</h2>\n<p>You may request access to, correction of, or deletion of your personal information by contacting us. We will respond in accordance with the applicable laws of India, including the Digital Personal Data Protection Act, 2023.</p>\n<h2>Changes to This Policy</h2>\n<p>We may update this policy from time to time. The latest version will always be available on this page.</p>"
+    },
+    {
+      "title": "Terms & Conditions",
+      "slug": "terms-and-conditions",
+      "description": "Terms and conditions for using the Damvolt website and our services.",
+      "content": "<p>By accessing and using this website, you agree to the following terms and conditions. If you do not agree, please do not use the website.</p>\n<h2>Use of Website</h2>\n<ul><li>The content on this website is for general information about our services only.</li><li>You agree not to misuse the website or attempt to gain unauthorised access to it.</li></ul>\n<h2>Quotations &amp; Orders</h2>\n<ul><li>All quotations are valid for the period mentioned in the quotation document.</li><li>Prices, scope, delivery timelines and payment terms are governed by the written quotation / work order agreed with the client.</li><li>Applicable taxes (GST) will be charged as per prevailing government rules.</li></ul>\n<h2>Payments</h2>\n<p>Payment milestones are defined in each work order. Delayed payments may lead to suspension of work or supply until dues are cleared.</p>\n<h2>Warranty</h2>\n<p>Equipment carries the manufacturer's warranty as applicable. Workmanship warranty, if any, is specified in the project agreement. Warranty does not cover damage caused by misuse, unauthorised modification, voltage fluctuation beyond rated limits, or natural calamities.</p>\n<h2>Site Responsibilities</h2>\n<p>The client shall provide safe access to the site, required permissions, and necessary utilities (power, water, storage) for execution, unless otherwise agreed in writing.</p>\n<h2>Intellectual Property</h2>\n<p>All content on this website, including text, logo and graphics, belongs to Damvolt Engineering Services Private Limited unless stated otherwise and may not be copied without written permission.</p>\n<h2>Limitation of Liability</h2>\n<p>Damvolt Engineering Services Private Limited shall not be liable for any indirect or consequential loss arising from the use of this website. Our liability on any project is limited as defined in the respective contract.</p>\n<h2>Governing Law</h2>\n<p>These terms are governed by the laws of India. Courts at New Delhi / Gautam Buddh Nagar shall have jurisdiction.</p>"
+    },
+    {
+      "title": "Disclaimer",
+      "slug": "disclaimer",
+      "description": "Disclaimer for information published on the Damvolt website.",
+      "content": "<p>The information on this website is provided by Damvolt Engineering Services Private Limited for general information purposes only. While we try to keep it accurate and up to date, we make no warranties about the completeness, reliability or suitability of the information.</p>\n<h2>Technical Information</h2>\n<p>Technical descriptions, specifications and images are indicative. Actual equipment, design and scope are decided after site survey and are confirmed in the written quotation. Photographs on this website may be representative.</p>\n<h2>Electrical Safety</h2>\n<p>Electrical work is hazardous. Content on this website must not be used as a guide for carrying out electrical work. Always engage qualified and licensed professionals.</p>\n<h2>External Links</h2>\n<p>This website may link to external websites. We have no control over their content and are not responsible for them.</p>\n<p>See also our <a href=\"/privacy-policy\">Privacy Policy</a> and <a href=\"/terms-and-conditions\">Terms &amp; Conditions</a>.</p>"
+    },
+    {
+      "title": "Service Policy",
+      "slug": "service-policy",
+      "description": "How Damvolt delivers, supports and maintains its electrical and automation services.",
+      "content": "<p>This Service Policy describes how Damvolt Engineering Services Private Limited plans, executes and supports the work it undertakes. <em>Draft — please review and edit before publishing.</em></p>\n<h2>Scope of Service</h2>\n<p>The scope, specifications, timelines and commercial terms of every project are defined in the written quotation / work order accepted by the client. Work outside that scope is treated as a variation and quoted separately.</p>\n<h2>Site Survey &amp; Execution</h2>\n<ul><li>A site survey is carried out before the final quotation wherever required.</li><li>Work is executed by trained technicians following applicable IS/IEC standards and site-safety practices.</li><li>Progress updates are shared as agreed in the work order.</li></ul>\n<h2>Testing &amp; Handover</h2>\n<p>On completion, systems are tested and commissioned, and test reports and handover documentation are provided.</p>\n<h2>Warranty &amp; After-Sales Support</h2>\n<p>Equipment carries the manufacturer's warranty. Workmanship warranty, AMC and breakdown support are provided as defined in the project agreement.</p>\n<h2>Cancellation &amp; Changes</h2>\n<p>Requests to change or cancel an order must be made in writing. Materials already procured or custom-built for the order may be chargeable.</p>"
+    },
+    {
+      "title": "Shipping Policy",
+      "slug": "shipping-policy",
+      "description": "Shipping and delivery terms for electrical equipment supplied by Damvolt.",
+      "content": "<p>This Shipping Policy applies to electrical equipment, panels and materials supplied by Damvolt Engineering Services Private Limited. <em>Draft — please review and edit before publishing.</em></p>\n<h2>Dispatch Timelines</h2>\n<p>Dispatch timelines are mentioned in the quotation / work order. Custom-built panels are dispatched after in-house testing and client approval, where applicable.</p>\n<h2>Shipping Charges &amp; Transit</h2>\n<ul><li>Freight and insurance are as specified in the quotation.</li><li>Delivery is made to the site address given in the order.</li><li>Risk passes to the client on delivery unless agreed otherwise in writing.</li></ul>\n<h2>Inspection on Delivery</h2>\n<p>Please inspect goods on receipt and report any transit damage or shortage in writing within 48 hours, with photographs, so that a claim can be raised with the carrier.</p>\n<h2>Delays</h2>\n<p>Delivery dates are estimates and may be affected by circumstances beyond our control. We will inform you promptly of any delay.</p>"
+    }
+  ]
+}
