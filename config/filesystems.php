@@ -33,14 +33,16 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
-            'serve' => true,
+            'serve' => false,   // it would otherwise claim /storage/{path} and answer 404 for every uploaded picture
             'throw' => false,
             'report' => false,
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            // Set PUBLIC_DISK_ROOT to a folder OUTSIDE the project if your deploy replaces the code folder every time,
+            // so uploaded pictures are not lost.
+            'root' => env('PUBLIC_DISK_ROOT') ?: storage_path('app/public'),
             'url' => rtrim(env('APP_URL', 'http://localhost'), '/').'/storage',
             'visibility' => 'public',
             'throw' => false,

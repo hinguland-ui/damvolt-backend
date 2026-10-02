@@ -27,7 +27,7 @@ Edit `.env`:
 ```bash
 php artisan migrate --force
 php artisan db:seed --force        # first admin + the starter content and pictures
-php artisan storage:link
+php artisan storage:link          # optional — if the host forbids symlinks, pictures are still served by the app
 ```
 Admin panel: `https://your-backend/admin`
 
@@ -37,6 +37,11 @@ Admin panel: `https://your-backend/admin`
 ```
 
 ## Uploads are not in git
+
+If every deploy replaces the project folder (fresh `git clone`), uploads inside it would be lost. Set
+`PUBLIC_DISK_ROOT=/home/USER/damvolt-files` in `.env` (a folder outside the project, writable by PHP) — then run
+`php artisan db:seed --force` once so the starter pictures are copied there.
+
 Pictures uploaded in the admin panel are stored in `storage/app/public/uploads/` **on each server** and are
 git-ignored — local and live never overwrite each other. The starter pictures that ship with the project are in
 `database/seeders/assets/` and are copied into storage by `db:seed`.
