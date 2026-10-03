@@ -64,11 +64,12 @@ class Content
                 'mapLink' => $o['map_link'] ?? null,
             ], $offices),
             'social' => [
-                'facebook' => $social['facebook'] ?? '#',
-                'instagram' => $social['instagram'] ?? '#',
-                'linkedin' => $social['linkedin'] ?? '#',
-                'youtube' => $social['youtube'] ?? '#',
+                'facebook' => $social['facebook'] ?? '',
+                'instagram' => $social['instagram'] ?? '',
+                'linkedin' => $social['linkedin'] ?? '',
+                'youtube' => $social['youtube'] ?? '',
             ],
+            'metaPixelId' => preg_match('/^\d{6,20}$/', (string) (Setting::section('metapixel')['pixel_id'] ?? '')) ? Setting::section('metapixel')['pixel_id'] : '',
             'recaptcha' => ['enabled' => Recaptcha::enabled(), 'siteKey' => Recaptcha::enabled() ? Recaptcha::siteKey() : ''],
         ];
 

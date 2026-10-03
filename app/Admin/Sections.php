@@ -220,6 +220,18 @@ class Sections
                             ['name' => 'site_key', 'label' => 'Site key', 'type' => 'text', 'col' => 6, 'rules' => 'nullable|string|max:200', 'hint' => 'Public key — used in the browser.'],
                             ['name' => 'secret_key', 'label' => 'Secret key', 'type' => 'password', 'col' => 6, 'rules' => 'nullable|string|max:200', 'hint' => 'Private key — stored encrypted. Click the eye to view it.'],
                         ]],
+                    ['key' => 'pixel', 'store' => 'metapixel', 'title' => 'Meta Pixel', 'icon' => 'bi-bar-chart-line',
+                        'help' => 'Paste your Meta (Facebook) Pixel ID. The website then reports page views to Meta automatically. Leave it empty to switch the Pixel off.',
+                        'fields' => [
+                            ['name' => 'pixel_id', 'label' => 'Pixel ID', 'type' => 'text', 'col' => 6, 'rules' => 'nullable|regex:/^\d{6,20}$/', 'hint' => 'Digits only, e.g. 123456789012345 (Meta Events Manager → your Pixel → Settings).'],
+                        ]],
+
+                    ['key' => 'security', 'store' => 'security', 'title' => 'Security', 'icon' => 'bi-shield-check',
+                        'help' => 'Activity log size and 2-step login. 2-step login: after the correct password, a 6-digit code is e-mailed to the admin’s own login email and must be entered to get in. Needs working SMTP (SMTP & Email tab) — if mail is not set up, 2-step login stays off so nobody gets locked out.',
+                        'fields' => [
+                            ['name' => 'two_factor', 'label' => 'Enable 2-step login (email OTP)', 'type' => 'switch', 'default' => false],
+                            ['name' => 'max_logs', 'label' => 'Maximum activity logs to keep', 'type' => 'number', 'col' => 4, 'default' => 1000, 'rules' => 'required|integer|between:50,10000', 'hint' => 'When there are more, the oldest are deleted automatically (50 – 10000).'],
+                        ]],
                 ],
             ],
             'seo' => [

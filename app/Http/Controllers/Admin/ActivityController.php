@@ -11,7 +11,7 @@ class ActivityController extends Controller
 {
     public function index(Request $request)
     {
-        Activity::prune();                                   // what is shown is never older than 7 days
+        Activity::prune();                                   // never more than the admin's "maximum logs"
 
         $action = (string) $request->query('action', '');
         $q = trim((string) $request->query('q', ''));
@@ -35,7 +35,21 @@ class ActivityController extends Controller
             'q' => $q,
             'action' => $action,
             'actions' => ActivityLog::query()->distinct()->orderBy('action')->pluck('action'),
-            'keepDays' => Activity::KEEP_DAYS,
+            'maxLogs' => Activity::maxLogs(),
         ]);
+    }
+
+    /** Bulk delete: the ticked rows of the table. */
+    public function destroy(Request $request)
+    {
+        $data = $request->validate([
+            'ids' => ['required', 'array', 'min:1', 'max:500'],
+            'ids.*' => ['integer'],
+        ]);
+
+        $deleted = ActivityLog::whereIn('id', $data['ids'])->delete();
+        Activity::log('delete', "Deleted {$deleted} activity log ".($deleted === 1 ? 'entry' : 'entries'));
+
+        return back()->with('success', "{$deleted} log ".($deleted === 1 ? 'entry' : 'entries').' deleted.');
     }
 }

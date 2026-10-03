@@ -16,7 +16,7 @@ class SitemapController extends Controller
         $base = rtrim((string) (config('cors.allowed_origins')[0] ?? config('app.url')), '/');
 
         $urls = [];
-        foreach (['/' => 1.0, '/about' => 0.8, '/services' => 0.9, '/industries' => 0.7, '/careers' => 0.5, '/faq' => 0.6, '/contact' => 0.8] as $path => $priority) {
+        foreach (['/' => 1.0, '/about' => 0.8, '/services' => 0.9, '/industries' => 0.7, '/faq' => 0.6, '/contact' => 0.8] as $path => $priority) {
             $urls[] = [$base.$path, null, $priority];
         }
         foreach (Service::live()->get(['slug', 'updated_at']) as $s) {

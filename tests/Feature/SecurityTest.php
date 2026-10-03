@@ -2,14 +2,20 @@
 
 namespace Tests\Feature;
 
+use App\Mail\OtpMail;
 use App\Models\ContactMessage;
 use App\Models\Setting;
 use App\Models\User;
+use App\Support\Media;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class SecurityTest extends TestCase
@@ -99,13 +105,148 @@ class SecurityTest extends TestCase
     {
         $this->admin(['email' => 'boss@example.com', 'password' => 'right-password']);
 
-        for ($i = 0; $i < 5; $i++) {
+        RateLimiter::clear('admin-lock:127.0.0.1');
+        for ($i = 0; $i < 4; $i++) {
             $this->post('/admin/login', ['email' => 'boss@example.com', 'password' => 'wrong'])->assertSessionHasErrors('email');
         }
-        // 6th attempt is locked even with the correct password
+        // 5th attempt is locked even with the correct password …
         $this->post('/admin/login', ['email' => 'boss@example.com', 'password' => 'right-password'])
             ->assertSessionHasErrors('email');
         $this->assertGuest();
+
+        // … and the lock (about 30 s) is still there after a page refresh, so the countdown never restarts.
+        $wait = RateLimiter::availableIn('admin-lock:127.0.0.1');
+        $this->assertGreaterThan(0, $wait);
+        $this->assertLessThanOrEqual(30, $wait);
+        $this->get('/admin/login')->assertOk()->assertSee('id="lock-secs">'.$wait, false);
+
+        RateLimiter::clear('admin-lock:127.0.0.1');
+        $this->post('/admin/login', ['email' => 'boss@example.com', 'password' => 'right-password'])->assertRedirect('/admin');
+    }
+
+    private function smtp(): void
+    {
+        Setting::put('smtp', ['host' => 'smtp.test', 'port' => 587, 'encryption' => 'tls', 'from_email' => 'noreply@test.com', 'password' => '']);
+        Mail::fake();
+    }
+
+    private function sentCode(): string
+    {
+        $code = null;
+        Mail::assertSent(OtpMail::class, function (OtpMail $m) use (&$code) {
+            $code = $m->code;
+
+            return true;
+        });
+
+        return $code;
+    }
+
+    public function test_forgot_password_three_steps(): void
+    {
+        $this->smtp();
+        $admin = $this->admin(['email' => 'boss@example.com', 'password' => 'old-password']);
+
+        $this->postJson('/admin/password/send', ['email' => 'boss@example.com'])->assertOk()->assertJson(['ok' => true]);
+        $code = $this->sentCode();
+
+        // new password is refused until the code is right
+        $this->postJson('/admin/password/reset', ['password' => 'new-password-1', 'password_confirmation' => 'new-password-1'])->assertStatus(410);
+        $this->postJson('/admin/password/verify', ['code' => $code === '123456' ? '654321' : '123456'])->assertStatus(422);
+        $this->postJson('/admin/password/verify', ['code' => $code])->assertOk();
+        $this->postJson('/admin/password/reset', ['password' => 'new-password-1', 'password_confirmation' => 'different'])->assertStatus(422);
+        $this->postJson('/admin/password/reset', ['password' => 'new-password-1', 'password_confirmation' => 'new-password-1'])->assertOk();
+
+        $this->assertTrue(Hash::check('new-password-1', $admin->fresh()->password));
+        // the code cannot be used twice
+        $this->postJson('/admin/password/verify', ['code' => $code])->assertStatus(410);
+    }
+
+    public function test_forgot_password_does_not_reveal_unknown_emails_or_mail_them(): void
+    {
+        $this->smtp();
+        $this->postJson('/admin/password/send', ['email' => 'nobody@example.com'])->assertOk()->assertJson(['ok' => true]);
+        Mail::assertNothingSent();
+    }
+
+    public function test_forgot_password_waits_a_minute_after_three_tries_even_for_unknown_emails(): void
+    {
+        $this->smtp();
+        RateLimiter::clear('pw-reset-lock:127.0.0.1');
+        RateLimiter::clear('pw-reset-try:127.0.0.1');
+
+        $this->postJson('/admin/password/send', ['email' => 'nobody1@example.com'])->assertOk()->assertJson(['retry_after' => 0]);
+        $this->postJson('/admin/password/send', ['email' => 'nobody2@example.com'])->assertOk()->assertJson(['retry_after' => 0]);
+        $this->postJson('/admin/password/send', ['email' => 'nobody3@example.com'])->assertOk()->assertJson(['retry_after' => 60]);
+        $this->postJson('/admin/password/send', ['email' => 'nobody4@example.com'])->assertStatus(429)->assertJson(['ok' => false]);
+
+        // still locked after a refresh: the login page starts the countdown from the server clock
+        $wait = RateLimiter::availableIn('pw-reset-lock:127.0.0.1');
+        $this->assertGreaterThan(0, $wait);
+        $this->assertLessThanOrEqual(60, $wait);
+        $this->get('/admin/login')->assertOk()->assertSee('var pwLeft = '.$wait, false);
+    }
+
+    public function test_meta_pixel_id_is_validated_and_sent_to_the_website(): void
+    {
+        $this->asAdmin()->put('/admin/settings/pixel', ['pixel_id' => 'abc<script>'])->assertSessionHasErrors('pixel_id');
+        $this->asAdmin()->put('/admin/settings/pixel', ['pixel_id' => '123456789012345'])->assertSessionHasNoErrors();
+        $this->assertSame('123456789012345', \App\Support\Content::get()['site']['metaPixelId'] ?? null);
+
+        $this->asAdmin()->put('/admin/settings/pixel', ['pixel_id' => ''])->assertSessionHasNoErrors();
+        $this->assertSame('', \App\Support\Content::get()['site']['metaPixelId'] ?? null);
+    }
+
+    public function test_reset_code_dies_after_five_wrong_guesses(): void
+    {
+        $this->smtp();
+        $this->admin(['email' => 'boss@example.com']);
+        $this->postJson('/admin/password/send', ['email' => 'boss@example.com']);
+        $code = $this->sentCode();
+        $wrong = $code === '111111' ? '222222' : '111111';
+
+        for ($i = 0; $i < 5; $i++) {
+            $this->postJson('/admin/password/verify', ['code' => $wrong])->assertStatus(422);
+        }
+        $this->postJson('/admin/password/verify', ['code' => $code])->assertStatus(422);
+    }
+
+    public function test_two_step_login_needs_the_emailed_code(): void
+    {
+        $this->smtp();
+        Setting::put('security', ['two_factor' => true]);
+        $this->admin(['email' => 'boss@example.com', 'password' => 'right-password']);
+
+        $this->post('/admin/login', ['email' => 'boss@example.com', 'password' => 'right-password'])->assertRedirect('/admin/login/code');
+        $this->assertGuest();
+        $this->get('/admin')->assertRedirect('/admin/login');
+
+        $code = $this->sentCode();
+        $this->post('/admin/login/code', ['code' => $code === '123456' ? '654321' : '123456'])->assertSessionHasErrors('code');
+        $this->assertGuest();
+
+        $this->post('/admin/login/code', ['code' => $code])->assertRedirect('/admin');
+        $this->assertAuthenticated();
+        $this->assertEqualsWithDelta(time(), session('admin_login_at'), 5);
+    }
+
+    public function test_two_step_login_wrong_password_sends_no_code_and_off_means_off(): void
+    {
+        $this->smtp();
+        Setting::put('security', ['two_factor' => true]);
+        $this->admin(['email' => 'boss@example.com', 'password' => 'right-password']);
+        $this->post('/admin/login', ['email' => 'boss@example.com', 'password' => 'wrong'])->assertSessionHasErrors('email');
+        Mail::assertNothingSent();
+
+        Setting::put('security', ['two_factor' => false]);
+        $this->post('/admin/login', ['email' => 'boss@example.com', 'password' => 'right-password'])->assertRedirect('/admin');
+    }
+
+    public function test_two_step_login_stays_off_while_smtp_is_not_set_up(): void
+    {
+        Setting::put('security', ['two_factor' => true]);
+        $this->admin(['email' => 'boss@example.com', 'password' => 'right-password']);
+        $this->post('/admin/login', ['email' => 'boss@example.com', 'password' => 'right-password'])->assertRedirect('/admin');
     }
 
     public function test_successful_login_stamps_the_24h_clock(): void
@@ -157,13 +298,78 @@ class SecurityTest extends TestCase
             ->assertSessionHasNoErrors();
     }
 
-    public function test_an_admin_cannot_demote_or_deactivate_themselves(): void
+    public function test_users_page_only_allows_changing_a_password(): void
     {
-        $admin = $this->admin(['email' => 'me@example.com']);
+        $admin = $this->admin(['email' => 'me@example.com', 'name' => 'Me', 'password' => 'old-password']);
+        $other = $this->admin(['email' => 'other@example.com']);
 
-        $this->asAdmin($admin)->put("/admin/users/{$admin->id}", ['name' => 'Me', 'email' => 'me@example.com', 'role' => 'user', 'is_active' => 1])
-            ->assertSessionHas('error');
-        $this->assertSame('admin', $admin->fresh()->role);
+        // no adding, no deleting
+        $this->asAdmin($admin)->get('/admin/users/create')->assertStatus(405);
+        $this->asAdmin($admin)->post('/admin/users', ['name' => 'x', 'email' => 'x@example.com'])->assertStatus(405);
+        $this->asAdmin($admin)->delete("/admin/users/{$other->id}")->assertStatus(405);
+        $this->assertDatabaseHas('users', ['id' => $other->id]);
+
+        // name / email / role / status in the request are ignored; the password changes
+        $this->asAdmin($admin)->put("/admin/users/{$admin->id}", ['name' => 'Hacker', 'email' => 'new@example.com', 'role' => 'user', 'is_active' => 0, 'password' => 'new-password-1', 'password_confirmation' => 'new-password-1'])
+            ->assertSessionHasNoErrors();
+        $fresh = $admin->fresh();
+        $this->assertSame(['Me', 'me@example.com', 'admin', true], [$fresh->name, $fresh->email, $fresh->role, $fresh->is_active]);
+        $this->assertTrue(Hash::check('new-password-1', $fresh->password));
+
+        // a password is required
+        $this->asAdmin($admin)->put("/admin/users/{$admin->id}", ['name' => 'Me'])->assertSessionHasErrors('password');
+    }
+
+    public function test_replacing_a_picture_deletes_the_old_file(): void
+    {
+        Storage::fake('public');
+        $disk = Storage::disk('public');
+        $png = fn ($name) => UploadedFile::fake()->image($name, 40, 40);
+
+        // first upload, then replace it WITHOUT ticking "remove": the old file must be gone
+        $this->asAdmin()->put('/admin/home/about', ['title' => 'About', 'image' => $png('a.png')])->assertSessionHasNoErrors();
+        $first = Setting::section('home.about')['image'];
+        $this->assertTrue($disk->exists($first));
+
+        $this->asAdmin()->put('/admin/home/about', ['title' => 'About', 'image' => $png('b.png')])->assertSessionHasNoErrors();
+        $second = Setting::section('home.about')['image'];
+        $this->assertNotSame($first, $second);
+        $this->assertFalse($disk->exists($first));
+        $this->assertTrue($disk->exists($second));
+        $this->assertCount(1, $disk->allFiles('uploads'));
+
+        // saving again without a new file keeps the picture
+        $this->asAdmin()->put('/admin/home/about', ['title' => 'About 2'])->assertSessionHasNoErrors();
+        $this->assertTrue($disk->exists($second));
+
+        // a starter picture (images/…) is removed on replace too — unless another place still uses it
+        $disk->put('images/starter.webp', 'x');
+        Setting::put('home.about', ['title' => 'About', 'image' => 'images/starter.webp']);
+        Setting::put('brand', ['site_name' => 'S', 'short_name' => 'S', 'logo' => 'images/starter.webp']);   // shared
+        $this->asAdmin()->put('/admin/home/about', ['title' => 'About', 'image' => $png('c.png')])->assertSessionHasNoErrors();
+        $this->assertTrue($disk->exists('images/starter.webp'));                                              // still used by brand
+        Setting::put('brand', ['site_name' => 'S', 'short_name' => 'S']);
+        Setting::put('home.about', ['title' => 'About', 'image' => 'images/starter.webp']);
+        $this->asAdmin()->put('/admin/home/about', ['title' => 'About', 'image' => $png('d.png')])->assertSessionHasNoErrors();
+        $this->assertFalse($disk->exists('images/starter.webp'));
+    }
+
+    public function test_unused_uploaded_pictures_are_cleaned_up_but_new_and_used_ones_stay(): void
+    {
+        Storage::fake('public');
+        $disk = Storage::disk('public');
+        $disk->put('uploads/used.png', 'x');
+        $disk->put('uploads/orphan-old.png', 'x');
+        $disk->put('uploads/orphan-new.png', 'x');
+        Setting::put('home.about', ['title' => 'A', 'image' => 'uploads/used.png']);
+        touch($disk->path('uploads/used.png'), time() - 3 * 86400);
+        touch($disk->path('uploads/orphan-old.png'), time() - 3 * 86400);
+
+        $this->assertSame(1, Media::cleanOrphans());
+
+        $this->assertTrue($disk->exists('uploads/used.png'));
+        $this->assertFalse($disk->exists('uploads/orphan-old.png'));
+        $this->assertTrue($disk->exists('uploads/orphan-new.png'));      // younger than a day
     }
 
     public function test_secrets_are_encrypted_at_rest_and_shown_back_to_the_admin(): void

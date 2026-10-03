@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CrudController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EnquiryController;
 use App\Http\Controllers\Admin\LegalPageController;
+use App\Http\Controllers\Admin\PasswordResetController;
 use App\Http\Controllers\Admin\RecaptchaController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\ServiceController;
@@ -20,14 +21,27 @@ Route::get('assets/{dir}/{file}', [AssetController::class, 'show'])->name('asset
 Route::middleware('guest')->group(function () {
     Route::get('login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('login', [AuthController::class, 'login'])->name('login.submit');
+
+    // 2-step login: the e-mailed code
+    Route::get('login/code', [AuthController::class, 'showCode'])->name('login.code');
+    Route::post('login/code', [AuthController::class, 'verifyCode'])->middleware('throttle:10,1')->name('login.code.verify');
+    Route::post('login/code/resend', [AuthController::class, 'resendCode'])->middleware('throttle:3,1')->name('login.code.resend');
+
+    // Forgot password (3-step modal on the login page)
+    Route::post('password/send', [PasswordResetController::class, 'send'])->middleware('throttle:10,1')->name('password.send');
+    Route::post('password/verify', [PasswordResetController::class, 'verify'])->middleware('throttle:15,1')->name('password.verify');
+    Route::post('password/reset', [PasswordResetController::class, 'reset'])->middleware('throttle:10,1')->name('password.reset');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-    Route::resource('users', UserController::class)->except('show');
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::get('activity', [ActivityController::class, 'index'])->name('activity.index');
+    Route::post('activity/delete', [ActivityController::class, 'destroy'])->name('activity.destroy');
 
     Route::post('cache/clear', [CacheController::class, 'clear'])->middleware('throttle:10,1')->name('cache.clear');
 

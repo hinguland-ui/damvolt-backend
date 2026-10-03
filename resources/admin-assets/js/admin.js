@@ -118,7 +118,7 @@
             const input = document.querySelector(el.dataset.input);
             const q = new Quill(el, {
                 theme: 'snow',
-                modules: { toolbar: [[{ header: [2, 3, false] }], ['bold', 'italic', 'underline'], [{ list: 'ordered' }, { list: 'bullet' }], ['link'], ['clean']] },
+                modules: { toolbar: [[{ header: [2, 3, 4, false] }], ['bold', 'italic', 'underline'], [{ list: 'ordered' }, { list: 'bullet' }], ['blockquote', 'link'], ['clean']] },
             });
             if (input.value) q.clipboard.dangerouslyPasteHTML(input.value);
             input.form.addEventListener('submit', () => (input.value = q.root.innerHTML === '<p><br></p>' ? '' : q.root.innerHTML));

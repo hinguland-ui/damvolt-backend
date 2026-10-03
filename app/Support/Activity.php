@@ -3,13 +3,15 @@
 namespace App\Support;
 
 use App\Models\ActivityLog;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Support\Str;
 
 /** Admin activity log. Never throws: logging must not be able to break the action being logged. */
 class Activity
 {
-    public const KEEP_DAYS = 7;
+    /** How many entries are kept when the admin has not chosen a number (Site Settings → Security). */
+    public const DEFAULT_MAX = 1000;
 
     public static function log(string $action, string $description, ?User $user = null, ?string $actor = null): void
     {
@@ -35,8 +37,19 @@ class Activity
         }
     }
 
+    /** The "maximum logs" number saved in Site Settings → Security. */
+    public static function maxLogs(): int
+    {
+        $max = (int) (Setting::section('security')['max_logs'] ?? 0);
+
+        return $max >= 50 ? min($max, 10000) : self::DEFAULT_MAX;
+    }
+
+    /** Keeps only the newest maxLogs() entries; everything older is deleted. Returns how many were removed. */
     public static function prune(): int
     {
-        return ActivityLog::where('created_at', '<', now()->subDays(self::KEEP_DAYS))->delete();
+        $oldestKept = ActivityLog::query()->orderByDesc('id')->skip(self::maxLogs() - 1)->take(1)->value('id');
+
+        return $oldestKept ? ActivityLog::where('id', '<', $oldestKept)->delete() : 0;
     }
 }

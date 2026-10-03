@@ -9,6 +9,7 @@ use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Support\Activity;
 use App\Support\Content;
+use App\Support\HtmlSanitizer;
 use App\Support\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -105,7 +106,7 @@ class ServiceController extends Controller
             'service_category_id' => ['nullable', 'exists:service_categories,id'],
             'icon' => ['required', 'string', 'max:60'],
             'short' => ['nullable', 'string', 'max:400'],
-            'intro' => ['nullable', 'string', 'max:3000'],
+            'intro' => ['nullable', 'string', 'max:30000'],
             'offerings' => ['nullable', 'array'],
             'offerings.*.text' => ['nullable', 'string', 'max:300'],
             'benefits' => ['nullable', 'array'],
@@ -124,7 +125,7 @@ class ServiceController extends Controller
             'service_category_id' => $v['service_category_id'] ?? null,
             'icon' => $v['icon'],
             'short' => $v['short'] ?? null,
-            'intro' => $v['intro'] ?? null,
+            'intro' => HtmlSanitizer::clean($v['intro'] ?? '') ?: null,   // rich-text editor output, allow-listed tags only
             'offerings' => array_values(array_filter(array_column($v['offerings'] ?? [], 'text'))),
             'benefits' => array_values(array_filter($v['benefits'] ?? [], fn ($b) => ! empty($b['title']) || ! empty($b['text']))),
             'applications' => array_values($v['applications'] ?? []),

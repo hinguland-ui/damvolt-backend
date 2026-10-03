@@ -79,7 +79,7 @@
             </select>
 
         @else
-            <input id="{{ $uid }}" type="{{ in_array($type, ['number', 'email', 'url']) ? $type : 'text' }}" name="{{ $name }}" value="{{ $val }}"
+            <input id="{{ $uid }}" type="{{ in_array($type, ['number', 'email', 'url']) ? $type : 'text' }}" name="{{ $name }}" value="{{ $val ?? ($f['default'] ?? '') }}"
                 class="form-control @if($err) is-invalid @endif" @if (! empty($f['counter'])) data-counter="{{ $f['counter'] }}" @endif>
         @endif
 

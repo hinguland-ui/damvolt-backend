@@ -11,6 +11,8 @@ use App\Models\Service;
 use App\Models\Setting;
 use App\Models\User;
 use App\Support\Activity;
+use Illuminate\Support\Facades\DB;
+use App\Support\Housekeeping;
 use App\Support\EnquiryMailer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
@@ -183,24 +185,65 @@ class EnquiryAndSeoTest extends TestCase
         $this->assertFalse(ActivityLog::where('description', 'like', '%right-password%')->orWhere('description', 'like', '%wrong-one%')->exists());
     }
 
-    public function test_log_entries_older_than_seven_days_are_deleted_automatically(): void
+    public function test_the_log_keeps_only_the_newest_maximum_entries(): void
     {
-        Activity::log('update', 'fresh entry', null, 'x@example.com');
-        ActivityLog::create(['action' => 'update', 'description' => 'old entry', 'actor' => 'x@example.com', 'created_at' => now()->subDays(8)]);
-        ActivityLog::create(['action' => 'update', 'description' => 'six days old', 'actor' => 'x@example.com', 'created_at' => now()->subDays(6)]);
+        Setting::put('security', ['max_logs' => 50]);
+        for ($i = 0; $i < 70; $i++) {
+            ActivityLog::create(['action' => 'update', 'description' => "row {$i}", 'created_at' => now()]);
+        }
 
         $this->artisan('activity:prune')->assertSuccessful();
 
-        $this->assertSame(2, ActivityLog::count());
-        $this->assertFalse(ActivityLog::where('description', 'old entry')->exists());
+        $this->assertSame(50, ActivityLog::count());
+        $this->assertSame('row 69', ActivityLog::orderByDesc('id')->value('description'));   // newest kept
+        $this->assertSame('row 20', ActivityLog::orderBy('id')->value('description'));        // oldest 20 gone
     }
 
-    public function test_the_log_page_never_shows_entries_older_than_seven_days(): void
+    public function test_the_log_page_shows_the_newest_entries_and_the_limit(): void
     {
-        ActivityLog::create(['action' => 'update', 'description' => 'ancient change', 'actor' => 'a@example.com', 'created_at' => now()->subDays(9)]);
-        ActivityLog::create(['action' => 'update', 'description' => 'recent change', 'actor' => 'a@example.com', 'created_at' => now()->subDay()]);
+        Setting::put('security', ['max_logs' => 50]);
+        for ($i = 0; $i < 60; $i++) {
+            ActivityLog::create(['action' => 'update', 'description' => "change number {$i}", 'actor' => 'a@example.com', 'created_at' => now()]);
+        }
 
-        $this->asAdmin()->get('/admin/activity')->assertOk()->assertSee('recent change')->assertDontSee('ancient change');
+        $this->asAdmin()->get('/admin/activity')->assertOk()->assertSee('change number 59')->assertDontSee('change number 5<')->assertSee('newest 50 are kept');
+        $this->assertSame(50, ActivityLog::count());
+    }
+
+    public function test_log_entries_can_be_bulk_deleted(): void
+    {
+        for ($i = 0; $i < 12; $i++) {
+            ActivityLog::create(['action' => 'update', 'description' => "row {$i}", 'created_at' => now()]);
+        }
+        $ids = ActivityLog::orderBy('id')->limit(10)->pluck('id')->all();
+
+        $this->post('/admin/activity/delete', ['ids' => $ids])->assertRedirect('/admin/login');
+        $this->asAdmin()->post('/admin/activity/delete', ['ids' => $ids])->assertSessionHas('success');
+        $this->assertSame(0, ActivityLog::whereIn('id', $ids)->count());
+        $this->assertSame(2, ActivityLog::where('description', 'like', 'row %')->count());
+        $this->asAdmin()->post('/admin/activity/delete', ['ids' => []])->assertSessionHasErrors('ids');
+    }
+
+    public function test_max_logs_setting_is_validated_and_used(): void
+    {
+        $this->asAdmin()->put('/admin/settings/security', ['max_logs' => 10])->assertSessionHasErrors('max_logs');
+        $this->asAdmin()->put('/admin/settings/security', ['max_logs' => 200])->assertSessionHasNoErrors();
+        $this->assertSame(200, Activity::maxLogs());
+    }
+
+    public function test_housekeeping_removes_expired_cache_rows_and_sessions(): void
+    {
+        $now = time();
+        DB::table('cache')->insert([['key' => 'old', 'value' => 's:1:"x";', 'expiration' => $now - 100], ['key' => 'fresh', 'value' => 's:1:"x";', 'expiration' => $now + 1000]]);
+        DB::table('sessions')->insert([['id' => 'dead', 'payload' => '', 'last_activity' => $now - 999999], ['id' => 'alive', 'payload' => '', 'last_activity' => $now]]);
+
+        config(['cache.default' => 'database', 'session.driver' => 'database']);   // phpunit uses array stores
+        Housekeeping::run();
+
+        $this->assertDatabaseMissing('cache', ['key' => 'old']);
+        $this->assertDatabaseHas('cache', ['key' => 'fresh']);
+        $this->assertDatabaseMissing('sessions', ['id' => 'dead']);
+        $this->assertDatabaseHas('sessions', ['id' => 'alive']);
     }
 
     public function test_the_log_search_is_injection_safe_and_login_protected(): void

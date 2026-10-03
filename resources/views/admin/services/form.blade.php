@@ -42,8 +42,10 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label">Detail / overview <span class="text-muted fw-normal">(service page)</span></label>
-                            <textarea name="intro" rows="6" class="form-control @error('intro') is-invalid @enderror">{{ old('intro', $service->intro) }}</textarea>
-                            @error('intro') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <input type="hidden" id="intro" name="intro" value="{{ old('intro', $service->intro) }}">
+                            <div class="js-quill" data-input="#intro"></div>
+                            @error('intro') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                            <div class="form-hint">Write it like a document: headings, bold, lists, links — it appears on the website exactly in this format.</div>
                         </div>
                     </div>
                 </div>
