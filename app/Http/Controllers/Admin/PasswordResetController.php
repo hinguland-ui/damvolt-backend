@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Support\Activity;
 use App\Support\Otp;
+use App\Support\Recaptcha;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 
@@ -46,6 +47,14 @@ class PasswordResetController extends Controller
 
         $data = $request->validate(['email' => ['required', 'email', 'max:150']]);
         $email = mb_strtolower($data['email']);
+
+        // reCAPTCHA (if switched on in Site Settings) must pass before any code is sent.
+        if (Recaptcha::enabled()) {
+            $check = Recaptcha::verify($request->input('g-recaptcha-response'), $request->ip());
+            if (! $check['ok']) {
+                return $this->fail($check['message'], 422);
+            }
+        }
 
         $tries = 'pw-reset-try:'.$request->ip();
         RateLimiter::hit($tries, 600);

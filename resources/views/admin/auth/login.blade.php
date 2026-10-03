@@ -36,7 +36,7 @@
                         </div>
                         @if ($captchaKey)
                             <div class="mb-3 d-flex justify-content-center">
-                                <div class="g-recaptcha" data-sitekey="{{ $captchaKey }}"></div>
+                                <div id="login-captcha"></div>
                             </div>
                             @error('captcha') <div class="text-danger small mb-3 text-center">{{ $message }}</div> @enderror
                         @endif
@@ -68,6 +68,9 @@
                         <p class="text-muted small">Enter your admin email. We will send a 6-digit code to it.</p>
                         <label class="form-label">Email</label>
                         <input type="email" id="fp-email" class="form-control mb-3" maxlength="150" required>
+                        @if ($captchaKey)
+                            <div class="mb-3 d-flex justify-content-center"><div id="fp-captcha"></div></div>
+                        @endif
                         <button class="btn btn-primary w-100">Send code</button>
                     </form>
 
@@ -96,10 +99,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ \App\Support\AdminAsset::url('js/password-toggle.js') }}"></script>
     @if ($captchaKey)
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script src="https://www.google.com/recaptcha/api.js?onload=captchaReady&render=explicit" async defer></script>
     @endif
     <script>
     (function () {
+        // ---- reCAPTCHA (explicit rendering: one box on the login form, one in the forgot-password pop-up)
+        var captchaKey = @json($captchaKey), fpWidget = null;
+        window.captchaReady = function () {
+            var a = document.getElementById('login-captcha'), b = document.getElementById('fp-captcha');
+            if (a) { grecaptcha.render(a, { sitekey: captchaKey }); }
+            if (b) { fpWidget = grecaptcha.render(b, { sitekey: captchaKey }); }
+        };
+
         // ---- Lock countdown: the seconds come from the server clock, so a refresh never restarts the timer.
         var left = {{ (int) $lockSeconds }};
         var btn = document.getElementById('login-btn'), note = document.getElementById('lock-note'), secs = document.getElementById('lock-secs');
@@ -164,7 +175,13 @@
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
                 var n = +form.dataset.step, btnEl = form.querySelector('button:not([type=button])'), body;
-                if (n === 1) { body = { email: document.getElementById('fp-email').value }; }
+                if (n === 1) {
+                    body = { email: document.getElementById('fp-email').value };
+                    if (captchaKey) {
+                        body['g-recaptcha-response'] = fpWidget !== null ? grecaptcha.getResponse(fpWidget) : '';
+                        if (!body['g-recaptcha-response']) { say('Please tick “I’m not a robot”.'); return; }
+                    }
+                }
                 if (n === 2) { body = { code: document.getElementById('fp-code').value }; }
                 if (n === 3) {
                     body = { password: document.getElementById('fp-pass').value, password_confirmation: document.getElementById('fp-pass2').value };
@@ -173,6 +190,7 @@
                 btnEl.disabled = true;
                 post(urls[n], body).then(function (j) {
                     btnEl.disabled = false;
+                    if (n === 1 && fpWidget !== null) { grecaptcha.reset(fpWidget); }   // a token works once
                     if (n === 1 && j.retry_after) { startPwLock(j.retry_after); }
                     if (!j.ok) {
                         say(firstError(j));

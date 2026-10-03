@@ -187,6 +187,24 @@ class SecurityTest extends TestCase
         $this->get('/admin/login')->assertOk()->assertSee('var pwLeft = '.$wait, false);
     }
 
+    public function test_forgot_password_needs_the_captcha_when_it_is_enabled(): void
+    {
+        $this->smtp();
+        $this->admin(['email' => 'boss@example.com']);
+        Setting::put('recaptcha', ['enabled' => true, 'site_key' => 'site', 'secret_key' => Crypt::encryptString('secret')]);
+        $google = $this->fakeGoogle(false);
+        RateLimiter::clear('pw-reset-lock:127.0.0.1');
+        RateLimiter::clear('pw-reset-try:127.0.0.1');
+
+        $this->postJson('/admin/password/send', ['email' => 'boss@example.com'])->assertStatus(422);                                  // no tick
+        $this->postJson('/admin/password/send', ['email' => 'boss@example.com', 'g-recaptcha-response' => 'bad'])->assertStatus(422); // Google says no
+        Mail::assertNothingSent();
+
+        $google->pass = true;
+        $this->postJson('/admin/password/send', ['email' => 'boss@example.com', 'g-recaptcha-response' => 'ok'])->assertOk();
+        Mail::assertSent(OtpMail::class);
+    }
+
     public function test_meta_pixel_id_is_validated_and_sent_to_the_website(): void
     {
         $this->asAdmin()->put('/admin/settings/pixel', ['pixel_id' => 'abc<script>'])->assertSessionHasErrors('pixel_id');
