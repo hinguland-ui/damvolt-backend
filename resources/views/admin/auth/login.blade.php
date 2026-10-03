@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="robots" content="noindex, nofollow">
     <title>Login · {{ $site['short'] }} Admin</title>
     @include('admin.partials.styles')
 </head>
@@ -91,6 +92,8 @@
         </div>
     </div>
 
+    {{-- Bootstrap's JavaScript opens the "Forgot password" pop-up (the login page does not load the full admin scripts) --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ \App\Support\AdminAsset::url('js/password-toggle.js') }}"></script>
     @if ($captchaKey)
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>

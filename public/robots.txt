@@ -1,2 +1,6 @@
+# Backend (admin panel + API). The public website has its own robots.txt.
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /api
+Allow: /sitemap.xml
+Allow: /storage/
